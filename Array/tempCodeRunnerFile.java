@@ -1,53 +1,26 @@
-public class MaximumGap {
-    public static void main(String[] args) {
-        int[] nums = {3, 6, 9, 1};
-        int result = maximumGap(nums);
-        System.out.println("Maximum gap: " + result);
-    }
+public class MinimumPathSum {
+  public int minPathSum(int[][] grid) {
+      int rows = grid.length;
+      int cols = grid[0].length;
 
-    public static int maximumGap(int[] nums) {
-        if (nums == null || nums.length < 2)
-            return 0;
+      // Initialize the first row
+      for (int i = 1; i < cols; i++) {
+          grid[0][i] += grid[0][i - 1];
+      }
 
-        int min = nums[0], max = nums[0];
-        for (int num : nums) {
-            min = Math.min(min, num);
-            max = Math.max(max, num);
-        }
+      // Initialize the first column
+      for (int i = 1; i < rows; i++) {
+          grid[i][0] += grid[i - 1][0];
+      }
 
-        if (min == max)
-            return 0;
+      // Compute the minimum path sum for the rest of the grid
+      for (int i = 1; i < rows; i++) {
+          for (int j = 1; j < cols; j++) {
+              grid[i][j] += Math.min(grid[i - 1][j], grid[i][j - 1]);
+          }
+      }
 
-        int n = nums.length;
-        int bucketSize = Math.max(1, (max - min) / (n - 1));
-        int bucketCount = (max - min) / bucketSize + 1;
-
-        int[] bucketMin = new int[bucketCount];
-        int[] bucketMax = new int[bucketCount];
-        boolean[] bucketUsed = new boolean[bucketCount];
-
-        for (int i = 0; i < bucketCount; i++) {
-            bucketMin[i] = Integer.MAX_VALUE;
-            bucketMax[i] = Integer.MIN_VALUE;
-        }
-
-        for (int num : nums) {
-            int idx = (num - min) / bucketSize;
-            bucketMin[idx] = Math.min(bucketMin[idx], num);
-            bucketMax[idx] = Math.max(bucketMax[idx], num);
-            bucketUsed[idx] = true;
-        }
-
-        int maxGap = 0;
-        int prevMax = min;
-
-        for (int i = 0; i < bucketCount; i++) {
-            if (!bucketUsed[i])
-                continue;
-            maxGap = Math.max(maxGap, bucketMin[i] - prevMax);
-            prevMax = bucketMax[i];
-        }
-
-        return maxGap;
-    }
+      // The bottom-right cell contains the minimum path sum
+      return grid[rows - 1][cols - 1];
+  }
 }
