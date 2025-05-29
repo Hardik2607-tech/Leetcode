@@ -1,26 +1,31 @@
-public class MinimumPathSum {
-  public int minPathSum(int[][] grid) {
-      int rows = grid.length;
-      int cols = grid[0].length;
+public import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-      // Initialize the first row
-      for (int i = 1; i < cols; i++) {
-          grid[0][i] += grid[0][i - 1];
-      }
+public class SubsetsWithDup {
+    public List<List<Integer>> subsetsWithDup(int[] nums) {
+        // Sort the array to bring duplicates together
+        Arrays.sort(nums);
+        List<List<Integer>> result = new ArrayList<>();
+        backtrack(nums, 0, new ArrayList<>(), result);
+        return result;
+    }
 
-      // Initialize the first column
-      for (int i = 1; i < rows; i++) {
-          grid[i][0] += grid[i - 1][0];
-      }
-
-      // Compute the minimum path sum for the rest of the grid
-      for (int i = 1; i < rows; i++) {
-          for (int j = 1; j < cols; j++) {
-              grid[i][j] += Math.min(grid[i - 1][j], grid[i][j - 1]);
-          }
-      }
-
-      // The bottom-right cell contains the minimum path sum
-      return grid[rows - 1][cols - 1];
-  }
+    private void backtrack(int[] nums, int start, List<Integer> current, List<List<Integer>> result) {
+        // Add a copy of the current subset to the result
+        result.add(new ArrayList<>(current));
+        for (int i = start; i < nums.length; i++) {
+            // Skip duplicates
+            if (i > start && nums[i] == nums[i - 1]) continue;
+            // Include nums[i] in the current subset
+            current.add(nums[i]);
+            // Move on to the next element
+            backtrack(nums, i + 1, current, result);
+            // Backtrack and remove nums[i] from the current subset
+            current.remove(current.size() - 1);
+        }
+    }
+}
+ {
+  
 }
