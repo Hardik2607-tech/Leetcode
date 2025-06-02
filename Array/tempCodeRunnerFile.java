@@ -1,47 +1,66 @@
-public class MaximalSquare {
-    public int maximalSquare(char[][] matrix) {
-        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
-            return 0;
-        }
-        int rows = matrix.length;
-        int cols = matrix[0].length;
-        int maxSide = 0;
-        int[][] dp = new int[rows + 1][cols + 1];
+public class NumberOfIslands {
 
-        for (int i = 1; i <= rows; i++) {
-            for (int j = 1; j <= cols; j++) {
-                if (matrix[i - 1][j - 1] == '1') {
-                    dp[i][j] = Math.min(
-                        Math.min(dp[i][j - 1], dp[i - 1][j]),
-                        dp[i - 1][j - 1]
-                    ) + 1;
-                    maxSide = Math.max(maxSide, dp[i][j]);
-                }
-            }
-        }
-        return maxSide * maxSide;
-    }
+  // Method to count the number of islands
+  public int numIslands(char[][] grid) {
+      if (grid == null || grid.length == 0) return 0;
 
-    public static void main(String[] args) {
-        MaximalSquare solver = new MaximalSquare();
+      int numIslands = 0;
+      int rows = grid.length;
+      int cols = grid[0].length;
 
-        char[][] matrix1 = {
-            {'1','0','1','0','0'},
-            {'1','0','1','1','1'},
-            {'1','1','1','1','1'},
-            {'1','0','0','1','0'}
-        };
-        System.out.println(solver.maximalSquare(matrix1)); // Output: 4
+      // Iterate through each cell in the grid
+      for (int i = 0; i < rows; i++) {
+          for (int j = 0; j < cols; j++) {
+              // If a land cell is found
+              if (grid[i][j] == '1') {
+                  numIslands++; // Increment island count
+                  dfs(grid, i, j); // Mark all connected land cells
+              }
+          }
+      }
 
-        char[][] matrix2 = {
-            {'0','1'},
-            {'1','0'}
-        };
-        System.out.println(solver.maximalSquare(matrix2)); // Output: 1
+      return numIslands;
+  }
 
-        char[][] matrix3 = {
-            {'0'}
-        };
-        System.out.println(solver.maximalSquare(matrix3)); // Output: 0
-    }
+  // Helper method to perform DFS
+  private void dfs(char[][] grid, int row, int col) {
+      int rows = grid.length;
+      int cols = grid[0].length;
+
+      // Check for invalid indices and water cells
+      if (row < 0 || row >= rows || col < 0 || col >= cols || grid[row][col] == '0') {
+          return;
+      }
+
+      grid[row][col] = '0'; // Mark the cell as visited
+
+      // Explore all four directions
+      dfs(grid, row - 1, col); // Up
+      dfs(grid, row + 1, col); // Down
+      dfs(grid, row, col - 1); // Left
+      dfs(grid, row, col + 1); // Right
+  }
+
+  // Main method to test the solution
+  public static void main(String[] args) {
+      NumberOfIslands solution = new NumberOfIslands();
+
+      // Example 1
+      char[][] grid1 = {
+          {'1','1','1','1','0'},
+          {'1','1','0','1','0'},
+          {'1','1','0','0','0'},
+          {'0','0','0','0','0'}
+      };
+      System.out.println("Number of islands (Example 1): " + solution.numIslands(grid1)); // Output: 1
+
+      // Example 2
+      char[][] grid2 = {
+          {'1','1','0','0','0'},
+          {'1','1','0','0','0'},
+          {'0','0','1','0','0'},
+          {'0','0','0','1','1'}
+      };
+      System.out.println("Number of islands (Example 2): " + solution.numIslands(grid2)); // Output: 3
+  }
 }
