@@ -19,9 +19,18 @@ public class CanPlaceFlowers {
     }
 
     public static void main(String[] args) {
-        CanPlaceFlowers sol = new CanPlaceFlowers();
+        CanPlaceFlowers solution = new CanPlaceFlowers();
 
-        System.out.println(sol.canPlaceFlowers(new int[]{1, 0, 0, 0, 1}, 1)); // true
-        System.out.println(sol.canPlaceFlowers(new int[]{1, 0, 0, 0, 1}, 2)); // false
+        int[] flowerbed1 = {1, 0, 0, 0, 1};
+        int n1 = 1;
+        System.out.println("Output 1: " + solution.canPlaceFlowers(flowerbed1, n1)); // true
+
+        int[] flowerbed2 = {1, 0, 0, 0, 1};
+        int n2 = 2;
+        System.out.println("Output 2: " + solution.canPlaceFlowers(flowerbed2, n2)); // false
+
+        int[] flowerbed3 = {0, 0, 1, 0, 0};
+        int n3 = 2;
+        System.out.println("Output 3: " + solution.canPlaceFlowers(flowerbed3, n3)); // true
     }
 }
