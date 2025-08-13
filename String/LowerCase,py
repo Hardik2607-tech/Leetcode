@@ -1,0 +1,14 @@
+class Solution:
+    def toLowerCase(self, s: str) -> str:
+        # Built-in lowercase conversion
+        return s.lower()
+
+
+# Example usage:
+if __name__ == "__main__":
+    sol = Solution()
+
+    # Test cases
+    print(sol.toLowerCase("Hello"))   # Output: "hello"
+    print(sol.toLowerCase("here"))    # Output: "here"
+    print(sol.toLowerCase("LOVELY"))  # Output: "lovely"
