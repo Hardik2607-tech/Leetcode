@@ -11,3 +11,6 @@ def largeGroupPositions(s: str):
             i = j + 1  # move start to next group
     
     return res
+print(largeGroupPositions("abbxxxxzzy"))       # [[3, 6]]
+print(largeGroupPositions("abc"))              # []
+print(largeGroupPositions("abcdddeeeeaabbbcd")) # [[3, 5], [6, 9], [12, 14]]
